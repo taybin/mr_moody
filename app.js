@@ -28,6 +28,7 @@ app.configure('production', function(){
 
 // Routes
 app.get('/', require('./routes/index').index);
+app.get('/moods', require('./routes/moods').moods);
 app.post('/mark', require('./routes/mark').mark);
 
 app.listen(3000, function(){

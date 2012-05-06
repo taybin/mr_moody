@@ -9,8 +9,8 @@ var couchdb = require('felix-couchdb'),
 exports.mark = function(req, res){
     db.saveDoc(
             {
-                happy: req.body.happy,
-                date: req.body.date
+                happy: req.body.happy === "true" ? 1 : -1,
+                date: new Date().toDateString()
             },
             function(er, ok) {
                 if (er) {throw new Error(JSON.stringify(er));}

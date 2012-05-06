@@ -5,20 +5,27 @@ $(document).ready(function(){
             type: 'post',
             url: '/mark',
             data: {
-                happy: isHappy,
-                date: new Date().toDateString()
+                happy: isHappy
             }
         });
     };
 
+    var getMood = function() {
+        return $.ajax({
+            type: 'get',
+            url: '/moods'
+        });
+    };
+
     $("#happy-btn").on('click', function(){
-        console.log("happy");
         markMood(true);
+        getMood();
     });
 
     $("#sad-btn").on('click', function(){
-        console.log("sad");
         markMood(false);
+        getMood();
     });
 
+    getMood();
 });
