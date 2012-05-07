@@ -39,7 +39,7 @@ $(document).ready(function(){
     MrMoody.chart = new Highcharts.Chart({
         chart: {
             renderTo: "graph",
-            backgroundColor: "lightBlue"
+            backgroundColor: "aliceblue"
         },
         series: [{
             data: [],
