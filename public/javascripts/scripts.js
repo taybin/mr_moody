@@ -41,8 +41,12 @@ $(document).ready(function(){
             renderTo: "graph"
         },
         series: [{
-            data: []
-        }]
+            data: [],
+            showInLegend: false
+        }],
+        title: {
+            text: "Mood over Time"
+        }
     });
 
     $("#happy-btn").on('click', function(){

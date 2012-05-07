@@ -2,18 +2,21 @@
  * POST update db
  */
 
+var settings = require('../settings').settings;
+
 var couchdb = require('felix-couchdb'),
-    client = couchdb.createClient(5984, 'mrmoody.iriscouch.com'),
-    db = client.db('mrmoody');
+    client = couchdb.createClient(settings.db_port, settings.db_server),
+    db = client.db(settings.db_name);
 
 exports.mark = function(req, res){
-    db.saveDoc(
-            {
-                happy: req.body.happy === "true" ? 1 : -1,
-                date: new Date().toDateString()
-            },
-            function(er, ok) {
-                if (er) {throw new Error(JSON.stringify(er));}
-                res.send(req.body);
-            });
+    var data = {
+        type: "mood_mark",
+        happy: req.body.happy === "true" ? 1 : -1,
+        date: new Date().toDateString()
+    };
+
+    db.saveDoc(data, function(er, ok) {
+        if (er) {throw new Error(JSON.stringify(er));}
+        res.send(req.body);
+    });
 };

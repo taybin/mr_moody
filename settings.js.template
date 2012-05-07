@@ -1,0 +1,7 @@
+exports.settings = {
+    db_username: "USER",
+    db_password: "PASSWORD",
+    db_server: "SERVER",
+    db_port: "5984",
+    db_name: "mrmoody"
+};
