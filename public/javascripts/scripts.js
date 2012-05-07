@@ -1,55 +1,57 @@
-var displayChart = function(data){
-    var categories = [],
+var MrMoody = {
+    chart: null,
+
+    displayChart: function(data){
+        var categories = [],
         series = [],
-        chart,
         i;
 
-    for( i = 0; i < data.rows.length; i++ ) {
-        categories.push(data.rows[i].key);
-        series.push(data.rows[i].value);
-    }
-
-    chart = new Highcharts.Chart({
-        chart: {
-            renderTo: "graph"
-        },
-          xAxis: {
-              categories: categories
-          },
-          series: [{
-              data: series
-          }]
-    });
-};
-
-var markMood = function(isHappy) {
-    $.ajax({
-        type: 'post',
-        url: '/mark',
-        data: {
-            happy: isHappy
+        for( i = 0; i < data.rows.length; i++ ) {
+            categories.push(data.rows[i].key);
+            series.push(data.rows[i].value);
         }
-    });
-};
 
-var getMood = function() {
-    return $.ajax({
-        type: 'get',
-        url: '/moods',
-        success: displayChart
-    });
+        MrMoody.chart.xAxis[0].setCategories(categories);
+        MrMoody.chart.series[0].setData(series);
+        MrMoody.chart.redraw();
+    },
+
+    markMood: function(isHappy) {
+        return $.ajax({
+            type: 'post',
+            url: '/mark',
+            data: {
+                happy: isHappy
+            }
+        });
+    },
+
+    getMood: function() {
+        return $.ajax({
+            type: 'get',
+            url: '/moods',
+            success: MrMoody.displayChart
+        });
+    }
 };
 
 $(document).ready(function(){
+    MrMoody.chart = new Highcharts.Chart({
+        chart: {
+            renderTo: "graph"
+        },
+        series: [{
+            data: []
+        }]
+    });
+
     $("#happy-btn").on('click', function(){
-        markMood(true);
-        getMood();
+        MrMoody.markMood(true).done(MrMoody.getMood);
     });
 
     $("#sad-btn").on('click', function(){
-        markMood(false);
-        getMood();
+        MrMoody.markMood(false).done(MrMoody.getMood);
     });
 
-    getMood();
+    MrMoody.getMood();
 });
