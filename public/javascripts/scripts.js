@@ -6,6 +6,10 @@ var MrMoody = {
         series = [],
         i;
 
+        data.rows.sort(function(a, b){
+            return Date.parse(a.key) > Date.parse(b.key);
+        });
+
         for( i = 0; i < data.rows.length; i++ ) {
             categories.push(data.rows[i].key);
             series.push(data.rows[i].value);
