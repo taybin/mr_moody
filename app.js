@@ -2,6 +2,8 @@
  * Module dependencies.
  */
 
+var settings = require('./settings').settings;
+
 var express = require('express');
 
 var lessMiddleware = require('less-middleware');
@@ -15,6 +17,8 @@ app.configure(function(){
   app.set('view engine', 'jade');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: settings.cookie_secret}));
   app.use(app.router);
   app.use(lessMiddleware({
       src: __dirname + '/public',

@@ -3,5 +3,7 @@ exports.settings = {
     db_password: "PASSWORD",
     db_server: "SERVER",
     db_port: "5984",
-    db_name: "mrmoody"
+    db_name: "mrmoody",
+
+    cookie_secret: "keyboard cat"
 };

@@ -9,14 +9,17 @@ var couchdb = require('felix-couchdb'),
     db = client.db(settings.db_name);
 
 exports.mark = function(req, res){
+    var date = new Date().toDateString();
+
     var data = {
         type: "mood_mark",
         happy: req.body.happy === "true" ? 1 : -1,
-        date: new Date().toDateString()
+        date: date
     };
 
     db.saveDoc(data, function(er, ok) {
         if (er) {throw new Error(JSON.stringify(er));}
+        req.session.date = date;
         res.send(req.body);
     });
 };
